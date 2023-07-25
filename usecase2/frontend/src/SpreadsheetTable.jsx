@@ -1,83 +1,38 @@
 import React, { useState, useMemo, useEffect } from "react";
 import axios from "axios";
 import Table from "./Table";
+import './assets/spreadsheet.css'
 
 const SpreadsheetTable = () => {
   const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const spreadsheet_id = "1m3vhA2A2ACOfcKJnfjGPybyIlQwYPxIyMf0F0gJjgHQ"
+  const spreadsheet_range = ["Personal Call Handling", "DNIS"];
  
-  
   const generateColumns = (data) => {
     if (data.length === 0) {
       return []; 
     }
 
-    return Object.keys(data[0]).map((key) => ({
+    return Object.keys(currentSheetData[0]).map((key) => ({
       Header: key,
       accessor: key,
     }));
   };
 
-  const generatedColumns = useMemo(() => generateColumns(data), [data]);
-  
-  // Define columns for the table
-  // const columns = useMemo(
-  //   () => [
-  //     {
-  //       // first group - TV Show
-  //       Header: "Personal Call Handling",
-  //       // First group columns
-  //       columns: [
-  //         {
-  //           Header: "Number",
-  //           accessor: "Number",
-  //         },
-  //         {
-  //           Header: "Message",
-  //           accessor: "Message",
-  //         },
-  //         {
-  //           Header: "Handling",
-  //           accessor: "Handling",
-  //         },
-  //         {
-  //           Header: "Language",
-  //           accessor: "Language",
-  //         },
-  //       ],
-  //     },
-      // {
-      //   // Second group - Details
-      //   Header: "Details",
-      //   // Second group columns
-      //   columns: [
-      //     {
-      //       Header: "Language",
-      //       accessor: "show.language",
-      //     },
-      //     {
-      //       Header: "Genre(s)",
-      //       accessor: "show.genres",
-      //     },
-      //     {
-      //       Header: "Runtime",
-      //       accessor: "show.runtime",
-      //     },
-      //     {
-      //       Header: "Status",
-      //       accessor: "show.status",
-      //     },
-      //   ],
-      // },
-  //   ],
-  //   []
-  // );
+  const handleClickSheet = (index) => {
+    setCurrentPage(index)
+  }
 
+  const currentSheetName = spreadsheet_range[currentPage];
+
+  const currentSheetData = data[currentSheetName];
+
+  const generatedColumns = useMemo(() => generateColumns(data), [data, currentPage]);
 
   useEffect(() => {
     (async () => {
       try {
-        const spreadsheet_id = "1m3vhA2A2ACOfcKJnfjGPybyIlQwYPxIyMf0F0gJjgHQ"
-        const spreadsheet_range = "Personal Call Handling";
         const response = await axios.post("http://localhost:8000/post_spreadsheet", {
           spreadsheet_id,
           spreadsheet_range,
@@ -92,14 +47,40 @@ const SpreadsheetTable = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <h1>Spreadsheet Data</h1>
-      {data.length === 0 ? (
-        <p>Loading data...</p>
-      ) : (
-        <Table data={data} columns={generatedColumns} />
-      )}
-    </div>
+      <div className="dataTable">
+        {data.length === 0 ? (
+          <p>Loading data...</p>
+        ) : (
+          <React.Fragment>
+            <div className="sheetsButtons">
+              {spreadsheet_range.map((sheet, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleClickSheet(index)}
+                    disabled={index === currentPage}
+                  >
+                    {sheet}
+                  </button>
+                ))}
+            </div>
+            <Table data={currentSheetData} columns={generatedColumns} />
+            <div className="sheetsButtons">
+              {spreadsheet_range.map((sheet, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleClickSheet(index)}
+                    disabled={index === currentPage}
+                  >
+                    {sheet}
+                  </button>
+                ))}
+            </div>
+          </React.Fragment>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -1,0 +1,66 @@
+
+.sheetsButtons {
+    margin-bottom:20px;
+    display:flex;
+  }
+.sheetsButtons > * {
+margin-right: 8px;
+}
+
+.dataTable {
+min-width: 80%;
+}
+
+.dataTable > * {
+margin-bottom: 20px;
+}
+th,td {
+margin: 0px;
+}
+
+td {
+padding: 2px;
+padding-right: 4px;
+}
+
+
+@media (prefers-color-scheme: light) {
+th,td {
+    border: 0.5px solid black;
+}
+
+.sheetsButtons > * {
+    border: 0.5px solid black;
+}
+
+.even-row > * {
+    background-color: gray;
+    color: black;
+}
+
+.odd-row > * {
+    background-color: #303030;
+    color: #b5b5b5;
+}
+}
+
+@media (prefers-color-scheme: dark) {
+th,td {
+    border: 0.5px solid white;
+}
+
+.sheetsButtons > * {
+    border: 0.5px solid white;
+}
+
+
+.even-row {
+    background-color: lightgray;
+    color: black;
+}
+
+.odd-row {
+    background-color: white;
+    color: gray;
+}
+}
