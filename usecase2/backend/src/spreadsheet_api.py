@@ -7,13 +7,11 @@ from .api.fetch_spreadsheet import fetch_spreadsheet
 
 app = FastAPI()
 
-# Set the allowed origins to include your frontend domain
 origins = [
+    "http://localhost:8080",
     "http://localhost:5173",
-    # Add more origins if needed
 ]
 
-# Add the CORS middleware to allow requests from the specified origins
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -28,10 +26,10 @@ def post_spreadsheet(spreadsheet_data: Dict[Any, Any]):
     Fetches the spreadsheet data from the Google Sheets API
     
     Parameters:
-        - spreadsheet_id: 
-        - spreadsheet_range: 
+        - spreadsheet_id: SpreadsheetID which is part of the URL in Google Sheets
+        - spreadsheet_range: Array of sheet pages
     Returns:
-        - values: 
+        - values: Values of sheet pages
     """
     return JSONResponse({
         "spreadsheet_data": fetch_spreadsheet(spreadsheet_data["spreadsheet_id"], spreadsheet_data["spreadsheet_range"])

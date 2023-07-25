@@ -5,9 +5,9 @@ from google.auth.transport.requests import Request
 
 
 def generate_credentials(scopes):
-    current_file_path = os.path.abspath(__file__)
-    token_path = os.path.join(current_file_path,'../../../credentials/token.json')
-    credentials_path = os.path.join(current_file_path,'../../../credentials/credentials.json')
+    current_file_path = os.path.dirname(os.path.abspath(__file__))
+    token_path = os.path.join(current_file_path,'../../credentials/token.json')
+    credentials_path = os.path.join(current_file_path,'../../credentials/credentials.json')
     creds = None
     
     if os.path.exists(token_path):
