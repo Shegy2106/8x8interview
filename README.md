@@ -13,7 +13,7 @@ Usecase 3 - a simple script written in Python
 
 ## usecase1
 
-runs a test 
+runs a test which runs the post request from the server to the MessageBird API and retrieves the wanted data
 
 ```console
 cd usecase3
@@ -28,7 +28,7 @@ pytest
 
 ## usecase2
 
-website with the table filled with data from the spreadsheet
+website with the table filled with data from the spreadsheet using Google Sheets API
 
 ```console
 cd usecase2
