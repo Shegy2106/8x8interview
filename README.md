@@ -16,7 +16,7 @@ Usecase 3 - a simple script written in Python
 runs a test which runs the post request from the server to the MessageBird API and retrieves the wanted data
 
 ```console
-cd usecase3
+cd usecase1
 setx MESSAGEBIRD_API_KEY "yQCal4N2rxPhtXCNJ2uVnzt2D" (Windows)
 export MESSAGEBIRD_API_KEY="yQCal4N2rxPhtXCNJ2uVnzt2D" (macOs/Linux)
 python3 -m venv env 
